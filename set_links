@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+mv ~/.bashrc ~/.bashrc.bak
+mv ~/.bash_profile ~/.bash_profile.bak
+ln -nfs  ~/.dotfiles/bashrc ~/.bashrc
+
