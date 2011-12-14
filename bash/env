@@ -24,3 +24,7 @@ export CLICOLOR=auto
 
 #svn svnserve: warning: cannot set LC_CTYPE locale
 export LC_ALL=C
+
+if [ -d ~/.dotfiles/bash/bin ]; then
+ PATH="$PATH:~/.dotfiles/bash/bin"
+fi

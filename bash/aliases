@@ -23,8 +23,6 @@ alias ltime='l'
 alias cl='clear; l'
 
 alias dirsize='du -csh'
-alias lsdirsizes='du -sch *'
-
 alias c='clear' # shortcut to clear your terminal auch mit CTRL-L
 alias x='exit'
 
@@ -127,15 +125,14 @@ alias gemin='sudo gem install $1 --no-rdoc --no-ri --verbose'
 alias gem?='gem list|grep $1'
 alias rake?='rake -T|grep $1'
 alias cap?='cap -T|grep $1'
-alias rgrowl='rake -rubygems -r rakegrowl'
 alias ruby-info='gem env'
 
 #######################################################################
 #Rails#
 #######################################################################
-alias migrate='bundle exec rake db:migrate && bundle exec rake db:test:clone'
-alias migrate_last='bundle exec  rake db:rollback && migrate'
-alias remigrate='migrate_last'
+
+alias migrate="bundle exec db:migrate db:test:prepare"
+alias remigrate="bundle exec db:migrate db:migrate:redo db:schema:dump db:test:prepare"
 alias ssclean='cleanup && svn up && bundle install && dbsync && migrate && cleanup && ss'
 alias dbsync='LIVEDUMP=true bundle exec rake db:sync_production_to_local_db --trace'
 alias dbsync_last='bundle exec rake db:import_last --trace'
@@ -172,30 +169,12 @@ ss () {
 alias tl='tail -f log/*.log'
 alias routes?="routes | grep -i $1' "
 
-#######################################################################
-#Apache
-#######################################################################
-
-if [ "$OS" = "darwin" ] ; then
-  alias apache_restart='sudo apachectl graceful'
-  alias apache_info='sudo apachectl -V'
-  alias apache_errorlog=' sudo tail -f /var/log/apache2/error_log '
-  alias apache_accesslog='sudo tail -f /var/log/apache2/access_log'
-fi
-
-if [ "$OS" = "linux" ] ; then
-  alias apache_restart='sudo apache2ctl graceful'
-  alias apache_info='sudo apache2ctl -V'
-  alias apache_errorlog='sudo tail -f /var/log/apache2/error.log'
-  alias apache_accesslog='sudo tail -f /var/log/apache2/access.log'
-fi
-
-
-#cheats gem install cheat
-#http://cheat.errtheblog.com/
-alias cheat?="cheat sheets|grep $1"
 
 # Bundler
 alias b="bundle"
 alias be="bundle exec"
 alias bake="bundle exec rake"
+
+#cheats gem install cheat
+#http://cheat.errtheblog.com/
+alias cheat?="cheat sheets|grep $1"
