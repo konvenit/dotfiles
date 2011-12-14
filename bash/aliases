@@ -195,17 +195,7 @@ fi
 #http://cheat.errtheblog.com/
 alias cheat?="cheat sheets|grep $1"
 
-#server arbeit
-alias schroedinger='ssh root@schroedinger.konvenit.com'
-#alias heisenberg='ssh root@heisenberg.konvenit.com'
-alias archimedes='ssh deploy@archimedes.konvenit.com'
-#alias vonneumann='ssh deploy@vonneumann.konvenit.com'
-alias einstein='ssh deploy@einstein.konvenit.com'
-alias fallover='ssh deploy@j11145.servers.jiffybox.net'
-alias staging='ssh deploy@j13807.servers.jiffybox.net'
-alias srv84='logssh deploy@87.230.73.84'
-alias srv88='logssh deploy@87.230.73.88'
-alias srv86='logssh deploy@87.230.73.86'
-alias srv90='logssh deploy@87.230.73.90'
-alias srv92='logssh deploy@87.230.73.92'
-
+# Bundler
+alias b="bundle"
+alias be="bundle exec"
+alias bake="bundle exec rake"
