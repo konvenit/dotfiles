@@ -21,32 +21,21 @@ alias labc='ls -lap' #alphabetical sort
 alias lsize='ls -lhSG'
 alias ltime='l'
 alias cl='clear; l'
-
 alias dirsize='du -csh'
 alias c='clear' # shortcut to clear your terminal auch mit CTRL-L
 alias x='exit'
-
-alias psa='ps wwwax'
 alias md='mkdir -p'
 
 alias ..='cd ..' # move up 1 dir
 alias ...='cd ../..' # move up 2 dirs
 alias ....='cd ../../..' # move up 3 dirs
 alias home='cd ~' # cd reicht auch 
-
 alias more='less'
-
 alias g='grep -i'  #case insensitive grep
 alias f='find . -iname'
-
 alias k9="sudo killall -9"
-
 alias v=vim
 alias ducks='du -cksh * | sort -rn|head -11'
-alias du1='du -h -d 1'
-alias systail='tail -f /var/log/syslog'
-alias mestail='tail -f /var/log/messages'
-alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 
 if [ "$OS" = "darwin" ] ; then
     # Finder
@@ -61,27 +50,6 @@ alias h='history' # shortcut for history
 alias h?='history | grep -i $1'
 
 #######################################################################
-#network
-############################################################################
-alias last3='last -n 3'
-alias open_intern_pro="lsof -i"
-alias live_tcp='sudo tcpdump -i en0 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"'
-alias openports='sudo lsof -i -P | grep -i "listen"'
-alias openinternet='sudo lsof -P -i -n'
-alias apps_with_internetconnection='sudo  lsof -nPi | cut -f 1 -d " "| uniq | tail -n +2'
-alias show_blocked='sudo ipfw -a list'
-
-function tracert {
-    mtr $1
-}
-
-
-#######################################################################
-# Files
-#######################################################################
-alias topfiles="watch -d -n 2 'df; ls -FlAt;'"
-
-#######################################################################
 # Processes
 #######################################################################
 alias tu='top -o cpu' # cpu
@@ -91,18 +59,11 @@ if [ "$OS" = "darwin" ] ; then
     alias topmem='ps -o rss,command -waxc | sort -nr | head -10'
     alias topcpu='ps -o pcpu,command -waxc | sort -nr | head -10'
 fi    
-#
-if [ "$OS" = "linux" ] ; then
-    alias topmem='ps -auxf | sort -nr -k 4| head -10'
-    alias topcpu='ps -auxf | sort -nr -k 3| head -10'
-fi
 
 function ps? {
     ps ax | grep -i $1 | grep -v grep 
 }
 
-#hardware
-alias cpu='cat /proc/cpuinfo'
 #logs 
 alias lastlogs="sudo find /var/log/ -mmin -10"
 
@@ -120,7 +81,6 @@ fi
 alias r="bundle exec rake"
 alias cg='cd $GEM_HOME'
 alias irb='irb --readline'
-alias gemup='sudo gem update && sudo gem cleanup'
 alias gemin='sudo gem install $1 --no-rdoc --no-ri --verbose'
 alias gem?='gem list|grep $1'
 alias rake?='rake -T|grep $1'
@@ -167,8 +127,7 @@ ss () {
 }
 
 alias tl='tail -f log/*.log'
-alias routes?="routes | grep -i $1' "
-
+alias routes?="routes | grep -i $1 "
 
 # Bundler
 alias b="bundle"
