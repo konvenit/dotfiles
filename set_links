@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-mv ~/.bashrc ~/.bashrc.bak
-mv ~/.bash_profile ~/.bash_profile.bak
-ln -nfs  ~/.dotfiles/bashrc ~/.bashrc
+if [ -f ~/.bash_profile ]; then
+  mv ~/.bash_profile ~/.bash_profile.bak
+fi
+ln -nfs  ~/.dotfiles/bashrc ~/.bash_profile
 
