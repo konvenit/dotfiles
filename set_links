@@ -2,5 +2,5 @@
 if [ -f ~/.bash_profile ]; then
   mv ~/.bash_profile ~/.bash_profile.bak
 fi
-ln -nfs  ~/.dotfiles/bashrc ~/.bash_profile
 
+ln -nfs  ~/.dotfiles/bashrc ~/.bash_profile

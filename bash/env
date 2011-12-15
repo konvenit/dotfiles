@@ -26,5 +26,5 @@ export CLICOLOR=auto
 export LC_ALL=C
 
 if [ -d ~/.dotfiles/bash/bin ]; then
- PATH="$PATH:~/.dotfiles/bash/bin"
+ PATH="$PATH:~/.dotfiles/bin"
 fi
