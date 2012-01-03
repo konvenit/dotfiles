@@ -93,7 +93,7 @@ alias ruby-info='gem env'
 alias migrate="bundle exec db:migrate db:test:prepare"
 alias remigrate="bundle exec db:migrate db:migrate:redo db:schema:dump db:test:prepare"
 alias ssclean='cleanup && svn up && bundle install && dbsync && migrate && cleanup && ss'
-alias dbsync='LIVEDUMP=true bundle exec rake db:sync_production_to_local_db --trace'
+alias dbsync='LIVEDUMP=true bundle exec rake db:create:all && bundle exec rake db:sync_production_to_local_db --trace'
 alias dbsync_last='bundle exec rake db:import_last --trace'
 
 function sc {
