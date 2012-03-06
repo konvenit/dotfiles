@@ -63,10 +63,12 @@ esac
 #PS1="\n\u:\w \[$EBLACK\]\$(vcprompt)\[$NO_COLOR\] \n→ "\w\[\033[00m\]: 
 PS1="$XTITLE""\e[1;32m[\u@\h]\033[0;33m\]:\w\033[00m\] \n→ "
 
-#Special git prompt and commandlinde completion for git
-#install brew install bash-completion
+#git bash_completion
 if [ -f `brew --prefix`/etc/bash_completion.d/git-completion.bash  ]; then
   . `brew --prefix`/etc/bash_completion.d/git-completion.bash
   # show branch commandline
+  GIT_PS1_SHOWDIRTYSTATE=true
+  GIT_PS1_SHOWUNTRACKEDFILES=true
+	
   PS1='\e[1;32m[\u:\e[1;33m\w\e[1;32m]:\[\e[1;31m\]$(__git_ps1 " (%s)")\033[00m\] \n→ '
 fi
