@@ -80,6 +80,14 @@ alias ruby-info='gem env'
 alias migrate="bundle exec db:migrate && bundle exec rake db:annotate && bundle exec db:test:prepare"
 alias ssclean='git pull origin && bundle install && dbsync && migrate && cleanup && ss'     
 
+function bootstrap {
+    if [ -e script/bootstrap ]; then     
+       script/bootstrap
+    else
+      echo "no script/bootstrap"
+    fi
+} 
+ 
 function dbsync {
     if [ -e script/dbsync ]; then     
        script/dbsync
