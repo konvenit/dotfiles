@@ -80,7 +80,14 @@ alias ruby-info='gem env'
 alias migrate="bundle exec db:migrate && bundle exec rake db:annotate && bundle exec db:test:prepare"
 alias ssclean='git pull origin && bundle install && dbsync && migrate && cleanup && ss'     
 
-alias dbsync='LIVEDUMP=true bundle exec rake db:create:all && bundle exec rake db:sync_production_to_local_db --trace'
+function dbsync {
+    if [ -e script/dbsync ]; then     
+       script/dbsync
+    else
+      ` LIVEDUMP=true bundle exec rake db:create:all && bundle exec rake db:sync_production_to_local_db --trace `
+    fi
+}
+
 alias dbsync_last='bundle exec rake db:import_last --trace'
 
 function sc {
@@ -121,11 +128,22 @@ ss () {
 }
 
 alias tl='tail -f log/*.log'
-alias routes?="routes | grep -i $1 "
+alias routes?="routes | grep -i $1 " 
 
-# Bundler
+#######################################################################
+#Bundler
+############################################################################
 alias b="bundle"
 alias be="bundle exec"
 alias bi="bundle install"  
 alias bu="bundle update"
-alias r="bundle exec rake" 
+alias r="bundle exec rake"  
+alias bguard="bundle exec guard"  
+
+#######################################################################
+# Git #
+#######################################################################
+alias ungit="find . -name '.git' -exec rm -rf {} \;" 
+alias ga='git add .' 
+alias gl='git log'
+alias gs='git status -sb'
