@@ -1,6 +1,6 @@
 #http://www.pixelbeat.org/cmdline.html
 #http://www.unixguide.net/linux/linuxshortcuts.shtml
-alias rld="source ~/.bashrc"  
+alias rld="source ~/.bashrc"
 alias alias?='alias| grep -i $1'
 alias platform="echo $PLATFORM"
 
@@ -28,7 +28,7 @@ alias md='mkdir -p'
 alias ..='cd ..' # move up 1 dir
 alias ...='cd ../..' # move up 2 dirs
 alias ....='cd ../../..' # move up 3 dirs
-alias home='cd ~' # cd reicht auch 
+alias home='cd ~' # cd reicht auch
 alias more='less'
 alias g='grep -i'  #case insensitive grep
 alias f='find . -iname'
@@ -43,7 +43,7 @@ fi
 
 #######################################################################
 #history
-############################################################################ 
+############################################################################
 alias h='history' # shortcut for history
 alias h?='history | grep -i $1'
 
@@ -56,10 +56,10 @@ alias tm='top -o vsize' # memory
 if [ "$OS" = "darwin" ] ; then
     alias topmem='ps -o rss,command -waxc | sort -nr | head -10'
     alias topcpu='ps -o pcpu,command -waxc | sort -nr | head -10'
-fi    
+fi
 
 function ps? {
-    ps ax | grep -i $1 | grep -v grep 
+    ps ax | grep -i $1 | grep -v grep
 }
 
 
@@ -77,20 +77,18 @@ alias ruby-info='gem env'
 #Rails#
 #######################################################################
 
-alias migrate="bundle exec db:migrate && bundle exec rake db:annotate && bundle exec db:test:prepare"
-alias ssclean='git pull origin && bundle install && dbsync && migrate && cleanup && ss'     
-
+alias migrate="bundle exec rake db:migrate && bundle exec annotate -s && bundle exec rake db:test:prepare"
 function bootstrap {
-    if [ -e script/bootstrap ]; then     
+    if [ -e script/bootstrap ]; then
        script/bootstrap
     else
       echo "no script/bootstrap"
     fi
-} 
- 
+}
+
 function dbsync {
-    if [ -e script/dbsync ]; then     
-       script/dbsync
+    if [ -e script/dbsync ]; then
+       script/dbsync $@
     else
       ` LIVEDUMP=true bundle exec rake db:create:all && bundle exec rake db:sync_production_to_local_db --trace `
     fi
@@ -128,30 +126,14 @@ ss () {
     ./vendor/plugins/konvenit_plugin_trunk/start_server.rb
   elif [[ ${array[$dir ]} ]]; then
     bundle exec rake start_server
-  elif [ -e script/rails ]; then   
+  elif [ -e script/rails ]; then
     script/rails server $@
   else
-    script/server $@   
+    script/server $@
   fi
 }
 
 alias tl='tail -f log/*.log'
-alias routes?="routes | grep -i $1 " 
+alias routes?="routes | grep -i $1 "
 
-#######################################################################
-#Bundler
-############################################################################
-alias b="bundle"
-alias be="bundle exec"
-alias bi="bundle install"  
-alias bu="bundle update"
-alias r="bundle exec rake"  
-alias bguard="bundle exec guard"  
 
-#######################################################################
-# Git #
-#######################################################################
-alias ungit="find . -name '.git' -exec rm -rf {} \;" 
-alias ga='git add .' 
-alias gl='git log'
-alias gs='git status -sb'
