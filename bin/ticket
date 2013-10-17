@@ -1,0 +1,90 @@
+#!/usr/bin/env ruby
+# -*- coding: UTF-8 -*-
+
+require 'rubygems'
+
+require File.join(File.dirname(__FILE__), "..", "lib", "git_helpers")
+require File.join(File.dirname(__FILE__), "..", "lib", "jira_ticket")
+include GitHelpers
+
+ticket_call = (ARGV[0] || 'help').to_s.strip.downcase
+@valid_methods = %w(start pause end show restart help)
+
+raise "command '#{ticket_call}'' is not valid" unless @valid_methods.include?(ticket_call)
+
+def ticket_help
+   help = %(Usage: #{__FILE__} [command] [options]
+
+The most commonly used commands are:
+start              Starts a pullrequest with this ticket
+pause              Set the status to 'todo'
+show               opens the Ticket page
+restart            Set the status to 'In Progress'
+help               show this
+
+Examples:
+download specific database dumbs:  konvenit_backup download --file-pattern "konvenit_database_backup/2013\.10\.10\.23\.47"
+download and decrypt daily backup: konvenit_backup download -d -f "daily.*/2013\.10\.10"
+ )
+puts help
+end
+
+def log(msg)
+
+end
+
+def ticket_start
+  raise 'ticket start: your are not on master branch' unless current_branch == 'master'
+  number = ARGV[1]
+
+
+  raise "ungültige Ticketnummer #{number}" if number.to_i < 1
+  ticket_title = JiraTicket.title number
+  puts "start ticket '#{number}' #{ticket_title}"
+
+  branch_name = "#{number}-#{ticket_title[0...69]}".downcase.gsub(/ä/,'ae').gsub(/ö/,'oe').gsub(/ü/,'ue').gsub(/ß/,'ss').gsub(/\W/,' ').gsub(/\s+/, "-")
+  unless branch_exits? branch_name
+    puts %x{git checkout master}
+    puts %x{git pull origin master}
+    puts %x{git checkout -b #{branch_name}}
+  end
+  JiraTicket.to_start(number)
+  #reloads the shell to see the brach name
+  system 'source ~/.bashrc'
+end
+
+def ticket_restart
+  puts "ticket restart"
+  JiraTicket.to_start(current_ticket)
+end
+
+def ticket_pause
+  raise 'ticket pause on master could not work' if current_branch == 'master'
+  puts "ticket pause"
+  JiraTicket.to_todo current_ticket
+end
+
+def ticket_show
+  puts "ticket show #{current_ticket}"
+  JiraTicket.show current_ticket
+end
+
+def ticket_end
+  raise 'ticket end on master could not work' if current_branch == 'master'
+  puts "ticket end "
+  puts %x{branch-commit && branch-push && branch-pullrequest --force }
+  if $?.exitstatus == 0
+    JiraTicket.to_qa current_ticket
+    puts %x{git checkout master}
+    puts %x{git reset --hard origin/master}
+    puts %x{git pull origin master}
+
+    system "open #{weekly_plan_url} "
+     system 'source ~/.bashrc'
+  else
+    puts "Fehler beim Branchen"
+  end
+end
+
+send "ticket_#{ticket_call}"
+
