@@ -41,12 +41,12 @@ class JiraTicket
     fill_in "Passwort", :with => ENV['JIRA_PW']
     find('#login-form-submit').click
 
-#   raise "can't login with user: #{ENV['JIRA_USER']}" #if current_path.to_s =~ /login/
+    #   raise "can't login with user: #{ENV['JIRA_USER']}" #if current_path.to_s =~ /login/
 
-end
+  end
 
-def title
-  visit(url)
+  def title
+    visit(url)
     #puts find('#summary-val').native.all_text
     find('#summary-val').native.all_text
   end
@@ -122,8 +122,8 @@ def title
   end
 
   def self.show(ticket_number)
-   jira = JiraTicket.new(ticket_number)
-   system "open #{jira.url}"
- end
+    jira = JiraTicket.new(ticket_number)
+    system "open #{jira.url}"
+  end
 
 end

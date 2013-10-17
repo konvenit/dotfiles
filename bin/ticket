@@ -13,20 +13,20 @@ ticket_call = (ARGV[0] || 'help').to_s.strip.downcase
 raise "command '#{ticket_call}'' is not valid" unless @valid_methods.include?(ticket_call)
 
 def ticket_help
-   help = %(Usage: #{__FILE__} [command] [options]
+  help = %(Usage: #{__FILE__} [command] [options]
 
-The most commonly used commands are:
-start              Starts a pullrequest with this ticket
-pause              Set the status to 'todo'
-show               opens the Ticket page
-restart            Set the status to 'In Progress'
-help               show this
+           The most commonly used commands are:
+           start              Starts a pullrequest with this ticket
+           pause              Set the status to 'todo'
+           show               opens the Ticket page
+           restart            Set the status to 'In Progress'
+           help               show this
 
-Examples:
-download specific database dumbs:  konvenit_backup download --file-pattern "konvenit_database_backup/2013\.10\.10\.23\.47"
-download and decrypt daily backup: konvenit_backup download -d -f "daily.*/2013\.10\.10"
- )
-puts help
+           Examples:
+           download specific database dumbs:  konvenit_backup download --file-pattern "konvenit_database_backup/2013\.10\.10\.23\.47"
+           download and decrypt daily backup: konvenit_backup download -d -f "daily.*/2013\.10\.10"
+           )
+  puts help
 end
 
 def log(msg)
@@ -48,6 +48,7 @@ def ticket_start
     puts %x{git pull origin master}
     puts %x{git checkout -b #{branch_name}}
   end
+
   JiraTicket.to_start(number)
   #reloads the shell to see the brach name
   system 'source ~/.bashrc'
@@ -80,11 +81,10 @@ def ticket_end
     puts %x{git pull origin master}
 
     system "open #{weekly_plan_url} "
-     system 'source ~/.bashrc'
+    system 'source ~/.bashrc'
   else
     puts "Fehler beim Branchen"
   end
 end
 
 send "ticket_#{ticket_call}"
-

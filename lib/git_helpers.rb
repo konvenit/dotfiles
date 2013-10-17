@@ -39,8 +39,8 @@ module GitHelpers
   end
 
   def branch_exits?(branch_name)
-  system "git show-ref --verify --quiet refs/heads/#{branch_name} "
-  $? == 0
+    system "git show-ref --verify --quiet refs/heads/#{branch_name} "
+    $? == 0
   end
 
   def current_ticket
@@ -52,12 +52,12 @@ module GitHelpers
   end
 
   def weekly_plan_url
-     JiraTicket.new(current_ticket).weekly_plan
+    JiraTicket.new(current_ticket).weekly_plan
   end
 
   def github_app_name
-      remote_url = `git remote show -n origin`.split("\n").grep(/Push/).first.split.grep(/github/)[0]
-      remote_url.split(':')[1].sub(/\.git$/, '')
+    remote_url = `git remote show -n origin`.split("\n").grep(/Push/).first.split.grep(/github/)[0]
+    remote_url.split(':')[1].sub(/\.git$/, '')
   end
 
   def github_api_url
