@@ -34,7 +34,7 @@ def log(msg)
 end
 
 def ticket_start
-  raise 'ticket start: your are not on master branch' unless current_branch == 'master'
+  raise 'ticket start not on master could not work' unless current_branch == 'master'
   number = ARGV[1]
 
 
@@ -43,29 +43,32 @@ def ticket_start
   puts "start ticket '#{number}' #{ticket_title}"
 
   branch_name = "#{number}-#{ticket_title[0...69]}".downcase.gsub(/ä/,'ae').gsub(/ö/,'oe').gsub(/ü/,'ue').gsub(/ß/,'ss').gsub(/\W/,' ').gsub(/\s+/, "-")
-  unless branch_exits? branch_name
+  if not branch_exits? branch_name
     puts %x{git checkout master}
     puts %x{git pull origin master}
     puts %x{git checkout -b #{branch_name}}
+  else
+    puts %x{git checkout #{branch_name}}
   end
-
   JiraTicket.to_start(number)
-  #reloads the shell to see the brach name
+  #reloads the shell to see the branch name
   system 'source ~/.bashrc'
 end
 
 def ticket_restart
-  puts "ticket restart"
+  raise 'ticket pause on master could not work' if current_branch == 'master'
+  puts "ticket restart #{current_ticket}"
   JiraTicket.to_start(current_ticket)
 end
 
 def ticket_pause
   raise 'ticket pause on master could not work' if current_branch == 'master'
-  puts "ticket pause"
+  puts "ticket pause #{current_ticket}"
   JiraTicket.to_todo current_ticket
 end
 
 def ticket_show
+  raise 'ticket show on master could not work' if current_branch == 'master'
   puts "ticket show #{current_ticket}"
   JiraTicket.show current_ticket
 end
