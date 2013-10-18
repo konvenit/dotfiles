@@ -63,8 +63,6 @@ module GitHelpers
   def github_api_url
     remote_url = `git remote show -n origin`.split("\n").grep(/Push/).first.split.grep(/github/)[0]
     user_and_repo = remote_url.split(':')[1].sub(/\.git$/, '')
-
-    # URI.parse("https://github.com/api/v2/json/pulls/#{user_and_repo}")
     "https://api.github.com/repos/#{user_and_repo}/pulls"
   end
 

@@ -3,8 +3,6 @@ require 'capybara'
 require 'capybara/poltergeist'
 require 'capybara/dsl'
 
-#require File.join('/Users/deimel/Dropbox/bash', 'lib', 'jira_ticket')
-
 class JiraTicket
 
   include Capybara::DSL
@@ -38,16 +36,12 @@ class JiraTicket
     session
     visit("#{@url}/login.jsp")
     fill_in "Benutzername", :with => ENV['JIRA_USER']
-    fill_in "Passwort", :with => ENV['JIRA_PW']
+    fill_in "Passwort",     :with => ENV['JIRA_PW']
     find('#login-form-submit').click
-
-    #   raise "can't login with user: #{ENV['JIRA_USER']}" #if current_path.to_s =~ /login/
-
   end
 
   def title
     visit(url)
-    #puts find('#summary-val').native.all_text
     find('#summary-val').native.all_text
   end
 
