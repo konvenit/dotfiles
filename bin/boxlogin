@@ -1,10 +1,5 @@
 #!/usr/bin/env ruby
+require File.join(File.dirname(__FILE__), "..", "lib", "box_helper")
+include BoxHelper
 box = ARGV[0].to_s.strip
-
-mapping_ary = %x{ssh deploy@strogatz.konvenit.com 'cat /etc/apache2/delivery_boxen.map'}.split(/\W+/)
-mapping = Hash[mapping_ary.each_slice(2).to_a]
-
-abort("no mapping for box:#{box}  \navailable boxes:\n#{mapping.keys.join(',')}") unless mapping[box]
-box_ip = "10.0.3.#{mapping[box]}"
-puts "login to #{box} => #{box_ip}"
-system "ssh -A -t deploy@strogatz.konvenit.com ssh -A deploy@#{box_ip}"
+login box

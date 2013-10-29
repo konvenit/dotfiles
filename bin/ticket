@@ -5,10 +5,12 @@ require 'rubygems'
 
 require File.join(File.dirname(__FILE__), "..", "lib", "git_helpers")
 require File.join(File.dirname(__FILE__), "..", "lib", "jira_ticket")
+require File.join(File.dirname(__FILE__), "..", "lib", "box_helper")
 include GitHelpers
+include BoxHelper
 
 ticket_call = (ARGV[0] || 'help').to_s.strip.downcase
-@valid_methods = %w(start pause end show restart help)
+@valid_methods = %w(start pause end show restart help boxlogin)
 
 raise "command '#{ticket_call}'' is not valid" unless @valid_methods.include?(ticket_call)
 
@@ -20,6 +22,7 @@ def ticket_help
            pause              Set the status to 'todo'
            show               opens the Ticket page
            restart            Set the status to 'In Progress'
+           boxlogin           login to the running ticket box
            help               show this
 
            Examples:
@@ -53,6 +56,12 @@ def ticket_start
   JiraTicket.to_start(number)
   #reloads the shell to see the branch name
   system 'source ~/.bashrc'
+end
+
+def ticket_boxlogin
+  raise 'ticket pause on master could not work' if current_branch == 'master'
+  puts "ticket boxlogin #{current_ticket}"
+  login current_ticket
 end
 
 def ticket_restart
