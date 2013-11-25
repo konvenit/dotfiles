@@ -22,9 +22,6 @@ export HISTTIMEFORMAT="%F %T " #anzeige der Zeit in der history
 # Color grep
 export CLICOLOR=auto
 
-#svn svnserve: warning: cannot set LC_CTYPE locale
-export LC_ALL=C
-
 
 export LSCOLORS=FxFxCxDxBxebedabagacad #siehe http://blog.sensibleopensource.com/changing_colors_in_the_osx_terminal_1.htm
 
