@@ -58,11 +58,6 @@ if [ "$OS" = "darwin" ] ; then
     alias topcpu='ps -o pcpu,command -waxc | sort -nr | head -10'
 fi
 
-function ps? {
-    ps ax | grep -i $1 | grep -v grep
-}
-
-
 #######################################################################
 # Ruby #
 #######################################################################
