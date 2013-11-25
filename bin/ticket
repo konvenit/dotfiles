@@ -10,7 +10,7 @@ include GitHelpers
 include BoxHelper
 
 ticket_call = (ARGV[0] || 'help').to_s.strip.downcase
-@valid_methods = %w(start pause end show restart help boxlogin)
+@valid_methods = %w(start pause end show restart help boxlogin github)
 
 raise "command '#{ticket_call}'' is not valid" unless @valid_methods.include?(ticket_call)
 
@@ -21,6 +21,7 @@ def ticket_help
            start              Starts a pullrequest with this ticket
            pause              Set the status to 'todo'
            show               opens the Ticket page
+           github             opens github application
            restart            Set the status to 'In Progress'
            boxlogin           login to the running ticket box
            help               show this
@@ -80,6 +81,15 @@ def ticket_show
   raise 'ticket show on master could not work' if current_branch == 'master'
   puts "ticket show #{current_ticket}"
   JiraTicket.show current_ticket
+end
+
+def github_url
+  url = %x{git config --get remote.origin.url}.gsub('git@','').gsub(':','/').gsub('.git','').strip
+  "https://#{url}".strip
+end
+
+def ticket_github
+  system  "open #{github_url} "
 end
 
 def ticket_end
