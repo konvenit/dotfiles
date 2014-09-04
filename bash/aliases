@@ -109,7 +109,7 @@ function sg {
 #startet die lokalen Rails Apps
 ss () {
 
-  for app in auftragsbuch reaktor katalysator ratefinder2 loginator
+  for app in auftragsbuch reaktor katalysator ratefinder2 loginator casinator
   do
     array[$app]=1
   done
@@ -117,7 +117,9 @@ ss () {
   export dir="`basename $PWD`"
   echo $dir
 
-  if [ -f ./vendor/plugins/konvenit_plugin_trunk/start_server.rb ]; then
+  if [ -f ./start_server.rb ]; then
+    ruby ./start_server.rb
+  elif [ -f ./vendor/plugins/konvenit_plugin_trunk/start_server.rb ]; then
     ./vendor/plugins/konvenit_plugin_trunk/start_server.rb
   elif [[ ${array[$dir ]} ]]; then
     bundle exec rake start_server
