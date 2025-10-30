@@ -1,12 +1,12 @@
-= Konvenit Dot Files
+# Konvenit Dot Files
 
-== Installation
+## Installation
 
   git clone git://github.com/konvenit/dotfiles ~/.dotfiles
   cd ~/.dotfiles
   rake install
 
-== Scripts
+## Scripts
 
   to use the ticket script you must set the JIRA_USER and JIRA_PW in your enviroment
   poltergeist is required
